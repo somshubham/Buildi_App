@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mobileapp.buildi.buildi">
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -26,11 +27,24 @@
         <activity
             android:name=".register.Register"
             android:label="@string/title_activity_register"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".forgotpassword.ForgotPassword"
             android:label="@string/title_activity_forgot_password"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".login.LoginScreen"
+            android:label="@string/title_activity_login_screen" />
+        <activity
+            android:name=".home.Home"
+            android:label="buildi.com"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".register.AfterRegistration"
+            android:label="@string/title_activity_after_registration" />
+        <activity
+            android:name=".home.ProjectListPage"
+            android:label="@string/title_activity_project_list_page"></activity>
     </application>
 
 </manifest>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/plans"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Plans" />
+        <item
+            android:id="@+id/tasks"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Tasks" />
+
+        <item
+        android:id="@+id/nav_slideshow2"
+        android:icon="@drawable/ic_menu_slideshow"
+        android:title="photos" />
+        <item
+            android:id="@+id/files"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Files" />
+        <item
+            android:id="@+id/people"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="People" />
+        <item
+            android:id="@+id/nav_slideshow5"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Settings" />
+
+    </group>
+
+    <item android:title="Categories">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="My tasks" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="All tasks" />
+            <item
+                android:id="@+id/nav_send3"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Carpentry" />
+            <item
+                android:id="@+id/nav_send1"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Clean Up" />
+            <item
+                android:id="@+id/nav_send2"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Concrete" />
+            <item
+                android:id="@+id/GlassDecoration"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Glass Decoration" />
+            <item
+                android:id="@+id/WallPainting"
+                android:icon="@drawable/ic_menu_send"
+                android:title="WallPainting" />
+            <item
+                android:id="@+id/FloorDesign"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Floor Design" />
+            <item
+                android:id="@+id/Carpentry"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Carpentry" />
+            <item
+                android:id="@+id/CleanUp"
+                android:icon="@drawable/ic_menu_send"
+                android:title="CleanUp" />
+            <item
+                android:id="@+id/Concrete"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Concrete" />
+            <item
+                android:id="@+id/Design"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Design" />
+            <item
+                android:id="@+id/Drywall"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Drywall" />
+
+            <item
+                android:id="@+id/Earthwork"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Earthwork" />
+
+            <item
+                android:id="@+id/Flooring"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Flooring" />
+            <item
+                android:id="@+id/HVAC"
+                android:icon="@drawable/ic_menu_send"
+                android:title="HVAC" />
+            <item
+                android:id="@+id/Paint"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Paint" />
+
+            <item
+                android:id="@+id/Paving"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Paving" />
+            <item
+                android:id="@+id/Plumbing"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Plumbing" />
+
+            <item
+                android:id="@+id/Safety"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Safety" />
+
+
+
+
+
+
+
+        </menu>
+    </item>
+
+</menu>

@@ -2,7 +2,10 @@ package com.mobileapp.buildi.buildi.login;
 
 import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import org.apache.http.HttpResponse;
@@ -23,10 +27,13 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.mobileapp.buildi.buildi.R;
 import com.mobileapp.buildi.buildi.forgotpassword.ForgotPassword;
+import com.mobileapp.buildi.buildi.home.Home;
+import com.mobileapp.buildi.buildi.home.ProjectListPage;
 import com.mobileapp.buildi.buildi.register.Register;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
@@ -52,11 +59,14 @@ import java.util.List;
 public class LoginFragment extends Fragment {
 
 
-    String REGISTER_URL="https://warm-depths-10529.herokuapp.com/login";
-
+    private ProgressBar spinner;
+    String responseServer;
+    String data=null;
+    String[] jsonResult;
+    String[] userData;
     public LoginFragment() {
     }
-
+    public static final String MyPREFERENCES = "MyPrefs" ;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -83,17 +93,16 @@ public class LoginFragment extends Fragment {
 
                 Log.i("Data", "email=" + emailValue + " pass=" + passwordValue);
 
-
-               // login(emailValue, passwordValue);
+                //create an object of asyncT......and execute............
                 AsyncT asyncT = new AsyncT();
-                asyncT.execute();
+               asyncT.execute(""+emailValue,""+passwordValue);
+
+
+
             }
         });
 
-
-
-
-
+      // Register clicked ...........
 
         creatAccount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,7 +114,7 @@ public class LoginFragment extends Fragment {
             }
         });
 
-
+      //forgot password clicked .......
 
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,174 +135,154 @@ public class LoginFragment extends Fragment {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
-//   private void login(String email,String password) {
-//        class RegisterUser extends AsyncTask<String, Void, String> {
-//            ProgressDialog loading;
-//            RegisterUserClass ruc = new RegisterUserClass();
-//
-//
-//            @Override
-//            protected void onPreExecute() {
-//                super.onPreExecute();
-//                loading = ProgressDialog.show(getActivity(), "Please Wait While loggingin",null, true, true);
-//            }
-//
-//            @Override
-//            protected void onPostExecute(String s) {
-//                super.onPostExecute(s);
-//                loading.dismiss();
-//
-//            }
-//
-//            @Override
-//            protected String doInBackground(String... params) {
-//
-//                HashMap<String, String> data = new HashMap<String,String>();
-//                data.put("email",params[0]);
-//                data.put("password",params[1]);
-//                String result = ruc.sendPostRequest(REGISTER_URL,data);
-//                Log.i("Result",""+result);
-//                return  result;
-//            }
-//        }
-//
-//        RegisterUser ru = new RegisterUser();
-//        ru.execute(email,password);
-//    }
-//
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
-//    private void login(String email,String password) {
-//
-//        InputStream inputStream = null;
-//        String result = "";
-//        try {
-//
-//            URL url = new URL("https://warm-depths-10529.herokuapp.com/login");
-//            // 1. create HttpClient
-//            HttpClient httpclient = new DefaultHttpClient();
-//
-//            // 2. make POST request to the given URL
-//            HttpPost httpPost = new HttpPost(String.valueOf(url));
-//
-//            String json = "";
-//
-//            // 3. build jsonObject
-//            JSONObject jsonObject = new JSONObject();
-//            jsonObject.accumulate("username", ""+email);
-//            jsonObject.accumulate("password", ""+password);
-//
-//            // 4. convert JSONObject to JSON to String
-//            json = jsonObject.toString();
-//
-//            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-//            // ObjectMapper mapper = new ObjectMapper();
-//            // json = mapper.writeValueAsString(person);
-//
-//            // 5. set json to StringEntity
-//            StringEntity se = new StringEntity(json);
-//
-//            // 6. set httpPost Entity
-//            httpPost.setEntity(se);
-//
-//            // 7. Set some headers to inform server about the type of the content
-//            httpPost.setHeader("Accept", "application/json");
-//            httpPost.setHeader("Content-type", "application/json");
-//
-//            // 8. Execute POST request to the given URL
-//            HttpResponse httpResponse = httpclient.execute(httpPost);
-//
-//            // 9. receive response as inputStream
-//            inputStream = httpResponse.getEntity().getContent();
-//
-//            // 10. convert inputstream to string
-//            if(inputStream != null) {
-//                result = convertInputStreamToString(inputStream);
-//                Log.i("data",""+result);
-//            }
-//            else {
-//                result = "Did not work!";
-//            }
-//
-//        } catch (Exception e) {
-//            Log.d("InputStream", e.getLocalizedMessage());
-//        }
-//
-//    }
-//
-//
-//
-//    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
-//        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
-//        String line = "";
-//        String result = "";
-//        while((line = bufferedReader.readLine()) != null)
-//            result += ""+line;
-//
-//        inputStream.close();
-//        return result;
-//
-//    }
-//
-
-
-    // ###############################################
-
-    String responseServer;
-
     /* Inner class to get response */
-    class AsyncT extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected Void doInBackground(Void... voids) {
+    class AsyncT extends AsyncTask<String , Void, String> {
+
+
+
+        //convert the string into json object.....
+
+        private String[] getUserDatafromJsonString(String JsonStr)
+                throws JSONException {
+
+
+            JSONObject UserJson = new JSONObject(JsonStr);
+            String success=UserJson.getString("success");
+            String message=UserJson.getString("message");
+            jsonResult=new String[6];
+            jsonResult[0]=success;
+            jsonResult[1]=message;
+
+
+            JSONObject response=UserJson.getJSONObject("response");
+            Log.i("response",""+response);
+
+
+
+
+            JSONObject user=response.getJSONObject("user");
+            String firstName=user.getString("firstName");
+            int mobileNumber=user.getInt("mobileNumber");
+            String lastName=user.getString("lastName");
+            String userId=user.getString("_id");
+
+            jsonResult[2]=userId;
+            jsonResult[3]=firstName;
+            jsonResult[4]=lastName;
+            jsonResult[5]=""+mobileNumber;
+
+
+
+            Log.i("PrintData",""+success+" message="+message+"   response="+response+" id="+userId);
+            Log.i("mywing"," id="+userId+" fn="+firstName+" ln="+lastName+""+mobileNumber);
+
+
+
+
+return  jsonResult;
+        }
+
+
+
+
+
+
+
+
+
+
+        //progress bar ..................
+
+
+        ProgressDialog loading;
+
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(getActivity(), "Please Wait While loggingin",null, true, true);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+                //making a intent to login as sucess.........
+//                Intent intent=new Intent(getActivity(),LoginScreen.class);
+//                intent.putExtra("data",""+data);
+//                startActivity(intent);
+//
+//                getActivity().finish();
+
+
+
+                try {
+
+
+                 userData=new String[6];
+                 userData=getUserDatafromJsonString(data);
+
+
+                }
+                catch (Exception e)
+                {
+Log.i("Error in json",""+e);
+                }
+
+
+                SharedPreferences sharedpreferences =getActivity().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString("firstname", userData[3]);
+                editor.putString("Phone", userData[5]);
+                editor.putString("userId", userData[2]);
+                editor.putString("lastname",userData[4]);
+                editor.commit();
+
+
+
+                Intent intent=new Intent(getActivity(), ProjectListPage.class);
+
+                //intent.putExtra("data",""+userData);
+                intent.putExtra("userId",""+userData[2]);
+                intent.putExtra("firstname",""+userData[3]);
+                intent.putExtra("lastname",""+userData[4]);
+                intent.putExtra("mobileNumber",""+userData[5]);
+
+                startActivity(intent);
+
+                getActivity().finish();
+
+
+
+
+
+
+
+
+            }
+
+
+        //progress bar ends ...............
+
+  @Override
+        protected String doInBackground(String... params) {
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost("https://warm-depths-10529.herokuapp.com/login");
 
             try {
 
-                JSONObject jsonobj = new JSONObject();
 
-                jsonobj.put("username", "somshubhamsandroid@gmail.com");
-                jsonobj.put("password", "12345");
+                         String username=params[0];
+                         String password=params[1];
+
 
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-                nameValuePairs.add(new BasicNameValuePair("req", jsonobj.toString()));
-           Log.i("res",""+jsonobj.toString());
+                nameValuePairs.add(new BasicNameValuePair("username", ""+username));
+                nameValuePairs.add(new BasicNameValuePair("password", ""+password));
+
+
+               // Log.i("res",""+jsonobj.toString());
                 Log.e("mainToPost", "mainToPost" + nameValuePairs.toString());
 
                 // Use UrlEncodedFormEntity to send in proper format which we need
@@ -307,17 +296,24 @@ public class LoginFragment extends Fragment {
                 Log.e("response", "response -----" + responseServer);
 
 
+
+                data=responseServer;
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            return null;
+            return responseServer;
         }
 
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
 
-            //txt.setText(responseServer);
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(String.valueOf(aVoid));
+
+           data=responseServer;
+
+
+
+
+
         }
     }
 
@@ -337,7 +333,7 @@ public class LoginFragment extends Fragment {
         }
 
         // convert InputStream to String
-        private static String getStringFromInputStream(InputStream is) {
+        public static String getStringFromInputStream(InputStream is) {
 
             BufferedReader br = null;
             StringBuilder sb = new StringBuilder();
