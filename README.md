@@ -1,6 +1,5 @@
 # Buildi_App
 
-
 ## License
 
 Copyright 2017 Som Shubham Sahoo
